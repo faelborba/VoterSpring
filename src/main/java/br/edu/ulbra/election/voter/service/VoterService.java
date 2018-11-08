@@ -6,6 +6,7 @@ import br.edu.ulbra.election.voter.model.Voter;
 import br.edu.ulbra.election.voter.output.v1.GenericOutput;
 import br.edu.ulbra.election.voter.output.v1.VoterOutput;
 import br.edu.ulbra.election.voter.repository.VoterRepository;
+import com.sun.org.apache.xpath.internal.operations.Equals;
 import org.apache.commons.lang.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -100,6 +101,14 @@ public class VoterService {
         if (StringUtils.isBlank(voterInput.getEmail())){
             throw new GenericOutputException("Invalid email");
         }
+
+        if (!voterInput.getPassword().equals(voterInput.getPasswordConfirm())) {
+            throw new GenericOutputException("Password is not equal");
+        }
+        Voter searchedVoter = voterRepository.findByEmail(voterInput.getEmail()).orElse(null);
+        if (searchedVoter == null){
+            throw new GenericOutputException("This email are used");
+        }
         if (StringUtils.isBlank(voterInput.getName())){
             throw new GenericOutputException("Invalid name");
         }
@@ -112,6 +121,15 @@ public class VoterService {
                 throw new GenericOutputException("Password doesn't match");
             }
         }
+
+        if (voterInput.getName().length() < 5) {
+            throw new GenericOutputException("Invalid name");
+        }
+
+        if (voterInput.getName().indexOf(" ") != -1) {
+            throw new GenericOutputException("Invalid name");
+        }
+
     }
 
 }
