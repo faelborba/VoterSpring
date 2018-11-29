@@ -1,7 +1,7 @@
 package br.edu.ulbra.election.voter.input.v1;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModel;
 
 @ApiModel(description = "Voter Input Information")
 public class VoterInput {

@@ -106,7 +106,7 @@ public class VoterService {
             throw new GenericOutputException("Password is not equal");
         }
         Voter searchedVoter = voterRepository.findByEmail(voterInput.getEmail()).orElse(null);
-        if (searchedVoter == null){
+        if (searchedVoter != null){
             throw new GenericOutputException("This email are used");
         }
         if (StringUtils.isBlank(voterInput.getName())){
@@ -126,7 +126,7 @@ public class VoterService {
             throw new GenericOutputException("Invalid name");
         }
 
-        if (voterInput.getName().indexOf(" ") != -1) {
+        if (voterInput.getName().indexOf(" ") == -1) {
             throw new GenericOutputException("Invalid name");
         }
 
